@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { SignedOut } from "@clerk/nextjs";
+import HomeSearch from "@/components/home-search";
 
 export default function Home() {
   return (
@@ -33,7 +34,10 @@ export default function Home() {
             </p>
           </div>
 
-          {/*Search*/}
+          {/* Search UI */}
+          <div className="mx-auto max-w-3xl">
+            <HomeSearch />
+          </div>
         </div>
       </section>
 
