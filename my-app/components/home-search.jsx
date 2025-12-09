@@ -20,7 +20,7 @@ const HomeSearch = () => {
 const handleTextSubmit = async(e) => {
   e.preventDefault();
    if(!searchTerm.trim()){
-    toast.error("Please upload an image first");
+    toast.error("Please enter a search term or upload an image");
     return;
 
    }
@@ -86,8 +86,8 @@ const handleImageSearch = async(e) => {
         <Input
         type="text"
         placeholder="Enter make,model, or use our AI Image Search..."
-        value={setSearchTerm}
-        onChange={(e) =>setSearch(e.target.value)}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className="pl-10 pr-12 w-full rounded-full border-gray-300 bg-white/95 backdrop-blur-sm"
         />
 

@@ -1,15 +1,12 @@
+"use client";
 import React from "react";
 import { Button } from "./ui/button";
 import { Heart, CarFront, Layout, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { checkUser } from "../lib/checkUser";
 import Image from "next/image";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
-const Header = async ({ isAdminPage = false }) => {
-  const user = await checkUser();
-  const isAdmin = user?.role === "ADMIN";
-
+const Header = ({ isAdminPage = false }) => {
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
       <nav className="mx-auto px-4 py-4 flex items-center justify-between">
@@ -30,41 +27,40 @@ const Header = async ({ isAdminPage = false }) => {
         <div className="flex items-center space-x-4">
           {isAdminPage ? (
             <>
-            <Link href="/">
-              <Button variant="outline" className="flex items-center gap-2">
-                <ArrowLeft size={18} />
-                <span>Back to App</span>
-              </Button>
-            </Link>
+              <Link href="/">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <ArrowLeft size={18} />
+                  <span>Back to App</span>
+                </Button>
+              </Link>
             </>
           ) : (
             <SignedIn>
-              {!isAdmin && (
-                  <Link
-                  href="/reservationas"
-                  className="text-gray-600 hover:text-blue-600 flex items-center gep-2"
+              <Link
+                href="/reservationas"
+                className="text-gray-600 hover:text-blue-600 flex items-center gap-2"
               >
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <CarFront size={18} />
-                    <span className="hidden md:inline">My Reservations</span>
-                  </Button>
-                </Link>
-              )}
+                <Button variant="outline" className="flex items-center gap-2">
+                  <CarFront size={18} />
+                  <span className="hidden md:inline">My Reservations</span>
+                </Button>
+              </Link>
 
-               <a href="/saved-cars">
+              <a href="/saved-cars">
                 <Button className="flex items-center gap-2">
                   <Heart size={18} />
                   <span className="hidden md:inline">Saved Cars</span>
                 </Button>
               </a>
-               {isAdmin && (
-                <Link href="/admin">
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <Layout size={18} />
-                    <span className="hidden md:inline">Admin Portal</span>
-                  </Button>
-                </Link>
-              )}
+
+              {/* Admin Portal link: visibility is no longer role-checked here since checkUser was removed.
+                  If you want to restrict this, add a server endpoint to expose role or restore checkUser. */}
+              <Link href="/admin">
+                <Button variant="outline" className="flex items-center gap-2">
+                  <Layout size={18} />
+                  <span className="hidden md:inline">Admin Portal</span>
+                </Button>
+              </Link>
             </SignedIn>
           )}
 
